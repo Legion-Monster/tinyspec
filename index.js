@@ -97,15 +97,12 @@ function generateJson(yamlSpec, target) {
 }
 
 function generateHtml(json, target) {
-  return bootprint
-    .load(bootprintOpenapi)
-    .merge({
-      handlebars: {
-        partials: path.join(__dirname, './lib/bootprint_partials'),
-      },
-    })
-    .build(json, target)
-    .generate()
+  return new bootprint.Bootprint(bootprintOpenapi, {
+    handlebars: {
+      partials: path.join(__dirname, './lib/bootprint_partials'),
+    },
+  })
+    .run(json, target)
     // eslint-disable-next-line no-console
     .then(console.log)
     // eslint-disable-next-line no-console
